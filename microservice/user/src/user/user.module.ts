@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
-import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from './schema/user-schema';
+import { UserEntity } from './schema/user-schema';
 import { JwtService } from '@nestjs/jwt';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    TypeOrmModule.forFeature([UserEntity]),
     ClientsModule.register([
       {
         name: 'CITY_SERVICE',
@@ -16,9 +16,9 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         options: { port: 2000 },
       },
       {
-        name: 'create',
+        name: 'COUNTRY_SERVICE',
         transport: Transport.TCP,
-        options: { port: 2000 },
+        options: { port: 6000 },
       },
     ]),
   ],

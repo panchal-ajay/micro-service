@@ -18,14 +18,6 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
 
-  // Connect microservice
-  // app.connectMicroservice({
-  //   transport: Transport.TCP,
-  //   options: {
-  //     port: 2000,
-  //   },
-  // });
-
   await app.startAllMicroservices();
   await app.listen(4000);
 }
